@@ -6,18 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up Page</title>
 
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
     <link href="../style.css" rel="stylesheet" />
   </head>
   <body>
@@ -51,13 +54,96 @@
         </div>
       </div>
     </nav>
-    <hr />
+
+    <div style="background-color: white">
+      <div class="d-flex">
+        <!-- First Half -->
+        <div class="col-md-6 align-items-center justify-content-center">
+          <!-- <div
+          class="d-md-flex align-items-center text-center justify-content-center"
+        > -->
+          <img
+            class="image"
+            style="
+              height: 100%;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+            "
+            src="../img/main_wall_3.png"
+          />
+          <div class="carousel-caption">
+            <h1>Security is the main lock for your digital data</h1>
+          </div>
+          <!-- </div> -->
+        </div>
+
+        <!-- Second Half -->
+        <div
+          class="col-md-6 align-items-center justify-content-center bg-white"
+          style="background-position: center"
+        >
+          <div
+            id="Signup_box"
+            style="display: grid; justify-content: center; align-items: center"
+          >
+            <h1 style="padding-top: 20px; text-align: center">Sign Up</h1>
+            <input type="name" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <input type="gender" placeholder="Gender" />
+            <input type="Phone_no" placeholder="Phone No (Optional)" />
+            <input type="password" placeholder="Password" />
+            <div
+              style="
+                text-align: center;
+                background-color: #fafafa;
+                border-radius: 15;
+              "
+            >
+              <h6>Open Camera/Select Face Image Folder</h6>
+              <input type="file" accept="image/*" capture="capture" />
+            </div>
+            <div style="text-align: center">
+              <button
+                id="CreateAbutton"
+                class="ripple2"
+                style="
+                  background-color: #4e61cd;
+                  border-radius: 5px;
+                  color: #fafafa;
+                "
+              >
+                <a href="../pages/create_account.html" style="color: #fafafa">
+                  Create New Account
+                </a>
+              </button>
+            </div>
+            <h5 style="text-align: center">OR</h5>
+            <div style="text-align: center">
+              <button
+                id="Loginbutton"
+                class="ripple2"
+                style="
+                  background-color: #35e0d5;
+                  border-radius: 5px;
+                  color: #fafafa;
+                "
+              >
+                <a href="../pages/Account.html" style="color: #fafafa">
+                  Login
+                </a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer>
       <div
         class="container-fluid padding"
         data-aos="fade-up"
-        data-aos-offset="200"
+        data-aos-offset="100"
         data-aos-delay="50"
         data-aos-duration="1000"
       >
@@ -71,5 +157,9 @@
         </div>
       </div>
     </footer>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>

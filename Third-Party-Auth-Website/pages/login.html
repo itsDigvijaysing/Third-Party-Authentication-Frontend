@@ -89,7 +89,23 @@
           >
             <h1 style="padding-top: 20px; text-align: center">Sign In</h1>
             <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <div
+              style="
+                background-color: #fafafa;
+                border-radius: 5px;
+                padding: 5px;
+              "
+            >
+              <div>
+                <button id="start-camera">Start Camera</button>
+                <video id="video" width="160" height="120" autoplay></video>
+              </div>
+              <div>
+                <button id="click-photo">Click Photo</button>
+                <canvas id="canvas" width="160" height="120"></canvas>
+              </div>
+            </div>
+            <input type="password" placeholder="Password (Optional) " />
             <div style="text-align: center">
               <button
                 id="Loginbutton"
@@ -148,5 +164,6 @@
     <script>
       AOS.init();
     </script>
+    <script src="../js/camera.js"></script>
   </body>
 </html>

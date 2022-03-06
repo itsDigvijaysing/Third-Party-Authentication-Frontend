@@ -43,14 +43,6 @@
             <li class="nav-item active">
               <a class="nav-link" href="./../index.html">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./login.html">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./create_account.html"
-                >Create Account</a
-              >
-            </li>
           </ul>
         </div>
       </div>
@@ -88,28 +80,10 @@
             id="Signup_box"
             style="display: grid; justify-content: center; align-items: center"
           >
-            <h1 style="padding-top: 20px; text-align: center">Sign Up</h1>
+            <h1 style="padding-top: 20px; text-align: center">Org Sign Up</h1>
             <input type="name" placeholder="Name" />
             <input type="email" placeholder="Email" />
-            <input type="gender" placeholder="Gender" />
-            <input type="Phone_no" placeholder="Phone No (Optional)" />
-            <div
-              style="
-                background-color: #fafafa;
-                border-radius: 5px;
-                padding: 5px;
-              "
-            >
-              <div>
-                <button id="start-camera">Start Camera</button>
-                <video id="video" width="160" height="120" autoplay></video>
-              </div>
-              <div>
-                <button id="click-photo">Click Photo</button>
-                <canvas id="canvas" width="160" height="120"></canvas>
-              </div>
-            </div>
-            <input type="password" placeholder="Password" />
+            <input type="phone" placeholder="Phone No (Optional)" />
             <div style="text-align: center">
               <button
                 id="CreateAbutton"
@@ -121,23 +95,7 @@
                 "
               >
                 <a href="../pages/create_account.html" style="color: #fafafa">
-                  Create New Account
-                </a>
-              </button>
-            </div>
-            <h5 style="text-align: center">OR</h5>
-            <div style="text-align: center">
-              <button
-                id="Loginbutton"
-                class="ripple2"
-                style="
-                  background-color: #35e0d5;
-                  border-radius: 5px;
-                  color: #fafafa;
-                "
-              >
-                <a href="../pages/Account.html" style="color: #fafafa">
-                  Login
+                  Create Org API
                 </a>
               </button>
             </div>
@@ -152,7 +110,7 @@
         data-aos="fade-up"
         data-aos-offset="100"
         data-aos-delay="50"
-        data-aos-duration="1000"
+        data-aos-duration="100"
       >
         <div class="text-center">
           <div>
@@ -168,6 +126,5 @@
     <script>
       AOS.init();
     </script>
-    <script src="../js/camera.js"></script>
   </body>
 </html>

@@ -5,15 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Testing</title>
+    <link rel="icon" href="../img/icons8-lock.png" />
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <link href="../style.css" rel="stylesheet" />
   </head>
   <body>
-    <div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./../index.html"
+          ><img src="./../img/icons8-lock.png"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <h2 style="color: #fafafa">Third Party Authentication System</h2>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="./../index.html">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="./login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./create_account.html"
+                >Create Account</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- <div>
       <h1>Camera Opening Test</h1>
       <button id="start-camera">Start Camera</button>
       <video id="video" width="320" height="240" autoplay></video>
       <button id="click-photo">Click Photo</button>
       <canvas id="canvas" width="320" height="240"></canvas>
-    </div>
+    </div> -->
+
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="../js/camera.js"></script>
   </body>
 </html>

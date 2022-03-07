@@ -5,17 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account Page</title>
+    <link rel="icon" href="../img/icons8-lock.png" />
 
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -43,13 +39,16 @@
             <li class="nav-item active">
               <a class="nav-link" href="./../index.html">Home</a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="./Account.html">Account</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
     <div style="background-color: white">
-      <div class="d-flex">
+      <div class="d-flex row">
         <!-- First Half -->
         <div class="col-md-6 align-items-center justify-content-center">
           <div
@@ -78,13 +77,19 @@
             <input type="password" placeholder="Update Password" />
             <div
               style="
-                text-align: center;
                 background-color: #fafafa;
-                border-radius: 15;
+                border-radius: 5px;
+                padding: 5px;
               "
             >
-              <h6>Open Camera/Select Face Image Folder</h6>
-              <input type="file" accept="image/*" capture="capture" />
+              <div>
+                <button id="start-camera">Start Camera</button>
+                <video id="video" width="160" height="120" autoplay></video>
+              </div>
+              <div>
+                <button id="click-photo">Update Photo</button>
+                <canvas id="canvas" width="160" height="120"></canvas>
+              </div>
             </div>
             <div style="text-align: center">
               <button
@@ -128,6 +133,10 @@
     <script>
       AOS.init();
     </script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <script src="../js/camera.js"></script>
   </body>

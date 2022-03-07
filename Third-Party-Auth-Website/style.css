@@ -207,11 +207,13 @@ hr.light-100 {
 }
 #Login_box {
   margin: 0 auto;
+  flex-wrap: wrap;
   width: 70%;
-  height: 75%;
+  height: auto;
   background-color: rgba(78, 205, 196, 0.2);
-  margin-top: 30vh;
-  transform: translateY(-30%);
+  padding: 20px;
+  /* margin-top: 35%; */
+  /* transform: translateY(-30%); */
   box-shadow: 10px 10px 1px 0px skyblue;
   border-radius: 10px;
 }
@@ -219,10 +221,11 @@ hr.light-100 {
 #Signup_box {
   margin: 0 auto;
   width: 70%;
-  height: 85%;
+  height: auto;
   background-color: rgba(78, 205, 196, 0.2);
-  margin-top: 30vh;
-  transform: translateY(-30%);
+  padding: 20px;
+  /* margin-top: 50%; */
+  /* transform: translateY(-30%); */
   box-shadow: 10px 10px 1px 0px skyblue;
   border-radius: 10px;
 }

@@ -10,13 +10,27 @@ export default class Home extends Component {
       <div>
         <Carousel>
           <Carousel.Item>
-            <img className="d-block w-100" src={impimage} alt="First slide" />
-            <Carousel.Caption>
-              <h1>Security is the main lock for your digital data</h1>
-            </Carousel.Caption>
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <img
+                className="d-block h-100 w-100"
+                src={impimage}
+                alt="First slide"
+              />
+              <Carousel.Caption style={{ textAlign: "center", top: "25%" }}>
+                <h1>Security is the main lock for your digital data</h1>
+              </Carousel.Caption>
+            </div>
           </Carousel.Item>
           <Carousel.Item>
-            <img className="d-block w-100" src={otherone} alt="Second slide" />
+            <img
+              className="d-block h-100 w-100"
+              src={otherone}
+              alt="Second slide"
+            />
           </Carousel.Item>
         </Carousel>
         <div

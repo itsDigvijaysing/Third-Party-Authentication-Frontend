@@ -18,8 +18,8 @@ export default class NavbarCustom extends Component {
                 Third Party Authentication System
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
+              <Navbar.Collapse id="basic-navbar-nav ml-auto">
+                <Nav className="ml-auto">
                   <Nav.Link as={Link} to={"/"}>
                     Home
                   </Nav.Link>
@@ -29,7 +29,13 @@ export default class NavbarCustom extends Component {
                   <Nav.Link as={Link} to={"/org"}>
                     Organization Account
                   </Nav.Link>
-                  <Nav.Link href="#Documentation">Documentation</Nav.Link>
+                  <Nav.Link
+                    href="https://github.com/RoyalTechie/Third-Party-Authentication-Frontend/blob/main/third-party-auth-react/README.md"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Documentation
+                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Container>

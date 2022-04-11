@@ -53,6 +53,9 @@ function User() {
         </div>
         <div style={{ width: "50%", height: "80vh" }}>
           <div>
+            <div>
+              <h3>User Name</h3>
+            </div>
             <div className="container">
               <div className="card-3d-wrap mx-auto" style={{ height: "60vh" }}>
                 <div className="card-3d-wrapper">

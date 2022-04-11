@@ -15,10 +15,15 @@ export default class NavbarCustom extends Component {
             <Container>
               <img alt="Logo" src={final_default} width={64} height={64} />
               <Navbar.Brand as={Link} to={"/"}>
-                Third Party Authentication System
+                Third Party Auth System
               </Navbar.Brand>
+
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav ml-auto">
+
+              <Navbar.Collapse
+                id="basic-navbar-nav"
+                style={{ justifyContent: "flex-end" }}
+              >
                 <Nav className="ml-auto">
                   <Nav.Link as={Link} to={"/"}>
                     Home

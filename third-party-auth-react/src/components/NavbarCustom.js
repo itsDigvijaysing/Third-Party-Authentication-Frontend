@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "../pages/Home";
 import Org from "../pages/Org";
 import Auth from "../pages/Auth";
+import User from "../pages/User";
 
 export default class NavbarCustom extends Component {
   render() {
@@ -34,6 +35,9 @@ export default class NavbarCustom extends Component {
                   <Nav.Link as={Link} to={"/org"}>
                     Organization Account
                   </Nav.Link>
+                  <Nav.Link as={Link} to={"/user"}>
+                    Testing
+                  </Nav.Link>
                   <Nav.Link
                     href="https://github.com/RoyalTechie/Third-Party-Authentication-Frontend/blob/main/third-party-auth-react/README.md"
                     target="_blank"
@@ -51,6 +55,7 @@ export default class NavbarCustom extends Component {
             <Route path="/" element={<Home />} />
             <Route path="/org" element={<Org />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/user" element={<User />} />
           </Routes>
         </div>
       </Router>

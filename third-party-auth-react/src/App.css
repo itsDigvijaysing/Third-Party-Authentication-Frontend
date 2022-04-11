@@ -368,3 +368,15 @@ h6 span {
   color: white;
   font-size: 25px;
 }
+
+table {
+  border: 2px solid rgb(29, 29, 29);
+}
+
+tr {
+  border: 1px solid black;
+}
+
+td {
+  text-align: center;
+}

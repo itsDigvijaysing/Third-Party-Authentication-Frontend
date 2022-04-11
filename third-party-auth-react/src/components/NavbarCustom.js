@@ -36,7 +36,7 @@ export default class NavbarCustom extends Component {
                     Organization Account
                   </Nav.Link>
                   <Nav.Link as={Link} to={"/user"}>
-                    Testing
+                    Account
                   </Nav.Link>
                   <Nav.Link
                     href="https://github.com/RoyalTechie/Third-Party-Authentication-Frontend/blob/main/third-party-auth-react/README.md"

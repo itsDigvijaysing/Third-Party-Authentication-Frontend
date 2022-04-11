@@ -163,6 +163,9 @@ function Auth() {
                                 data-bs-dismiss="alert"
                                 aria-label="Close"
                               ></button>
+                              {alertMessage.message === "face matched" && (
+                                <h4>Login Successful</h4>
+                              )}
                             </div>
                           )}
 

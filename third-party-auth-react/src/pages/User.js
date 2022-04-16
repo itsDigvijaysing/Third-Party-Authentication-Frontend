@@ -1,11 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../App.css";
+// import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function User() {
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
   const [regPhone, setRegPhone] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  // let history = useNavigate();
+  let userId = useRef();
+
+  React.useEffect(() => {
+    let user = sessionStorage.getItem("user_id");
+    console.log(user, "New place I'm Here");
+    if (!user) {
+      // history("/auth");
+      // window.location.reload();
+    }
+    userId.current = user;
+    getUser(user);
+  }, []);
+
+  const getUser = async (user) => {
+    let userDate = await axios.get("http://localhost:5000/user/" + user);
+    console.log(userDate, "geetting dsgj ");
+
+    setRegEmail(userDate.data.email);
+    setRegName(userDate.data.name);
+    setRegPhone(userDate.data.phone);
+    setRegPassword(userDate.data.password);
+  };
+
+  const updateUser = async () => {
+    const userDate = {
+      name: regName,
+      email: regEmail,
+      phone: regPhone,
+    };
+
+    let user = await axios.put(
+      "http://localhost:5000/user/" + userId,
+      userDate
+    );
+    console.log(user, "what is coming here");
+  };
 
   return (
     <div>
@@ -51,7 +90,7 @@ function User() {
             </div>
           </div>
         </div>
-        <div style={{ width: "50%", height: "80vh" }}>
+        <div style={{ width: "50%", height: "80vh", padding: 20 }}>
           <div>
             <div>
               <h3>User Name</h3>
@@ -119,7 +158,7 @@ function User() {
                     </div>
                     <button
                       type="button"
-                      // onClick={() => registerUser()}
+                      onClick={() => updateUser()}
                       className="btn-custom mt-4"
                     >
                       submit

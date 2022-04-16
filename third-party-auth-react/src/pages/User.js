@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "../App.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function User() {
@@ -8,26 +8,29 @@ function User() {
   const [regEmail, setRegEmail] = useState("");
   const [regPhone, setRegPhone] = useState("");
   const [regPassword, setRegPassword] = useState("");
-  // let history = useNavigate();
-  let userId = useRef();
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState({
+    message: "test",
+    status: "success",
+  });
+  let history = useNavigate();
+  const [userId, setUserId] = React.useState("");
 
   React.useEffect(() => {
     let user = sessionStorage.getItem("user_id");
-    console.log(user, "New place I'm Here");
     if (!user) {
-      // history("/auth");
-      // window.location.reload();
+      history("/auth");
     }
-    userId.current = user;
+    setUserId(user);
     getUser(user);
   }, []);
 
   const getUser = async (user) => {
-    let userDate = await axios.get("http://localhost:5000/user/" + user);
-    console.log(userDate, "geetting dsgj ");
+    let userDate = await axios.get("http://127.0.0.1:5000/user/" + user);
+    console.log(userDate, "geetting info ");
 
-    setRegEmail(userDate.data.email);
     setRegName(userDate.data.name);
+    setRegEmail(userDate.data.email);
     setRegPhone(userDate.data.phone);
     setRegPassword(userDate.data.password);
   };
@@ -37,13 +40,30 @@ function User() {
       name: regName,
       email: regEmail,
       phone: regPhone,
+      password: regPassword,
     };
 
+    // using axios
+
     let user = await axios.put(
-      "http://localhost:5000/user/" + userId,
+      "http://127.0.0.1:5000/user/" + userId,
       userDate
     );
-    console.log(user, "what is coming here");
+    if (user) {
+      setAlertMessage({
+        message: "User Updated",
+        status: "success",
+      });
+      setAlert(true);
+    }
+
+    // using fetch
+    // fetch("http://127.0.0.1:5000/user/" + userId,
+    //   {
+    //     method: 'PUT',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(userDate)
+    //   }).then((data) => console.log(data)).catch((err) => console.log(err))
   };
 
   return (
@@ -104,6 +124,20 @@ function User() {
                         Update Personal Details
                       </h4>
                     </div>
+                    {alert && (
+                      <div
+                        className={`alert alert-${alertMessage.status} alert-dismissible fade show`}
+                        role="alert"
+                      >
+                        {alertMessage.message}
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                    )}
                     <div className="form-group mt-2">
                       <input
                         type="text"

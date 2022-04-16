@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import final_default from "../img/final_default.png";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -6,27 +6,23 @@ import Home from "../pages/Home";
 import Org from "../pages/Org";
 import Auth from "../pages/Auth";
 import User from "../pages/User";
-// import { useNavigate } from "react-router-dom";
 
 function NavbarCustom() {
-  const [userActive, setuserActive] = useState(false);
-  // let history = useNavigate();
+  const [userActive, setUserActive] = React.useState(false);
+
+  const logout = () => {
+    console.log("calling this");
+    sessionStorage.clear();
+    setUserActive(false);
+    window.location.reload();
+  };
 
   React.useEffect(() => {
     let user = sessionStorage.getItem("user_id");
-    console.log(user, "I am here");
     if (user) {
-      console.log(user, "user present & active");
-      setuserActive(true);
+      setUserActive(true);
     }
-  }, []);
-  const logout = () => {
-    console.log("calling");
-    sessionStorage.clear();
-    setuserActive(false);
-    // history("/auth");
-    window.location.reload();
-  };
+  }, [userActive]);
 
   return (
     <Router>
@@ -52,17 +48,17 @@ function NavbarCustom() {
                   Organization Account
                 </Nav.Link>
 
-                {userActive === false ? (
+                {userActive ? (
+                  <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
+                ) : (
                   <Nav.Link as={Link} to={"/auth"}>
                     User Login/Register
                   </Nav.Link>
-                ) : (
-                  <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
                 )}
+
                 <Nav.Link as={Link} to={"/user"}>
                   Account
                 </Nav.Link>
-
                 <Nav.Link
                   href="https://github.com/RoyalTechie/Third-Party-Authentication-Frontend/blob/main/third-party-auth-react/README.md"
                   target="_blank"

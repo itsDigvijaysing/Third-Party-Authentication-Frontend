@@ -41,7 +41,7 @@ function Auth() {
   const [email, setEmail] = useState("");
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState({
-    message: "testin",
+    message: "test",
     status: "success",
   });
 
@@ -75,6 +75,7 @@ function Auth() {
     // console.log(Object.keys(data.data).length)
     if (Object.keys(data.data).length > 1) {
       sessionStorage.setItem("user_id", data.data._id["$oid"]);
+      window.location.reload();
       history("/user");
     } else {
       setAlertMessage({ message: data.data.data, status: "warning" });
@@ -181,7 +182,12 @@ function Auth() {
                             </div>
                           )}
 
-                          <div className="section text-center">
+                          <div
+                            className="section text-center"
+                            style={{
+                              padding: 20,
+                            }}
+                          >
                             <h4
                               className="mb-4 pb-1"
                               style={{ color: "white" }}
@@ -205,8 +211,8 @@ function Auth() {
                                   alt="sadsad"
                                   id="limage"
                                   style={{
-                                    marginBottom: "70px",
-                                    marginTop: "65px",
+                                    marginBottom: "25px",
+                                    marginTop: "25px",
                                   }}
                                 />
                               )}
@@ -258,7 +264,7 @@ function Auth() {
                           </div>
                         </div>
                       </div>
-                      <div className="card-back">
+                      <div className="card-back" style={{}}>
                         <div className="center-wrap">
                           <div
                             className="section text-center"
@@ -288,8 +294,8 @@ function Auth() {
                                   alt="sadsad"
                                   id="limage"
                                   style={{
-                                    marginBottom: "50px",
-                                    marginTop: "55px",
+                                    marginBottom: "25px",
+                                    marginTop: "25px",
                                   }}
                                 />
                               )}
@@ -369,13 +375,19 @@ function Auth() {
                               />
                               <i className="input-icon uil uil-lock-alt"></i>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => registerUser()}
-                              className="btn-custom mt-4"
-                            >
-                              submit
-                            </button>
+                            {image !== "" &&
+                              regEmail &&
+                              regPassword &&
+                              regName &&
+                              regPhone && (
+                                <button
+                                  type="button"
+                                  onClick={() => registerUser()}
+                                  className="btn-custom mt-4"
+                                >
+                                  submit
+                                </button>
+                              )}
                           </div>
                         </div>
                       </div>

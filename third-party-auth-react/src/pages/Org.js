@@ -1,12 +1,39 @@
 import React, { useState } from "react";
 import "../App.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function Org() {
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
   const [regWeb, setRegWeb] = useState("");
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState({
+    message: "test",
+    status: "success",
+  });
+
+  const registerUser = async () => {
+    const formData = new FormData();
+
+    formData.append("name", regName);
+    formData.append("email", regEmail);
+    formData.append("web", regWeb);
+
+    const data = await axios.post("http://127.0.0.1:5000/company", formData);
+    console.log(data);
+    setRegEmail("");
+    setRegName("");
+    setRegWeb("");
+    setAlertMessage({ message: data.data._id.$oid, status: "success" });
+    setAlert(true);
+  };
+
+  React.useEffect(() => {
+    if (sessionStorage.getItem("user_id")) {
+      // let org = sessionStorage.getItem("user_id");
+      // console.log(org);
+    }
+  });
 
   return (
     <div style={{ backgroundColor: "#d0d0d0", padding: 25 }}>
@@ -14,6 +41,20 @@ function Org() {
         <div className="card-3d-wrap mx-auto" style={{ height: "60vh" }}>
           <div className="card-3d-wrapper">
             <div className="card-front" style={{ padding: 25 }}>
+              {alert && (
+                <div
+                  className={`alert alert-${alertMessage.status} alert-dismissible fade show`}
+                  role="alert"
+                >
+                  Org ID : {alertMessage.message}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              )}
               <div className="section text-center">
                 <h4 className="mb-4 pb-1" style={{ color: "white" }}>
                   Org Sign Up
@@ -61,7 +102,7 @@ function Org() {
               </div>
               <button
                 type="button"
-                // onClick={() => registerUser()}
+                onClick={() => registerUser()}
                 className="btn-custom mt-4"
               >
                 submit

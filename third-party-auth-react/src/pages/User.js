@@ -67,15 +67,18 @@ function User() {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#d0d0d0" }}>
       <div
+        class="d-flex row"
         style={{
           display: "flex",
           flexDirection: "row",
-          backgroundColor: "#d0d0d0",
         }}
       >
-        <div style={{ width: "50%", height: "80vh", padding: 20 }}>
+        <div
+          class="col-md-6 align-items-center justify-content-center"
+          style={{ padding: 20 }}
+        >
           <div>
             <div>
               <h3>Login History</h3>
@@ -110,7 +113,10 @@ function User() {
             </div>
           </div>
         </div>
-        <div style={{ width: "50%", height: "80vh", padding: 20 }}>
+        <div
+          class="col-md-6 align-items-center justify-content-center"
+          style={{ padding: 20 }}
+        >
           <div>
             <div>
               <h3>User Name</h3>

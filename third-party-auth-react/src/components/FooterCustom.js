@@ -7,6 +7,9 @@ export default class FooterCustom extends Component {
         <div
           style={{
             display: "flex",
+            // flexDirection: "column",
+            // alignItems: "center",
+            // justifyContent: "space-evenly",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",

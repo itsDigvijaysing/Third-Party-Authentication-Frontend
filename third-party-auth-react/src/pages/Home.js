@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import impimage from "../img/main_wall_3.png";
-import otherone from "../img/main_wall_2.jpg";
 import "../App.css";
 export default class Home extends Component {
   render() {
@@ -17,18 +15,22 @@ export default class Home extends Component {
             >
               <img
                 className="d-block h-100 w-100"
-                src={impimage}
+                src={"main_wall_2.jpg"}
                 alt="First slide"
               />
-              <Carousel.Caption style={{ textAlign: "center", top: "25%" }}>
-                <h1>Security is the main lock for your digital data</h1>
-              </Carousel.Caption>
             </div>
           </Carousel.Item>
           <Carousel.Item>
             <img
               className="d-block h-100 w-100"
-              src={otherone}
+              src={"Security1.jpg"}
+              alt="Second slide"
+            />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block h-100 w-100"
+              src={"./security2.png"}
               alt="Second slide"
             />
           </Carousel.Item>

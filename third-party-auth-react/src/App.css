@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -134,15 +135,46 @@ h6 span {
   transform: translateX(44px) rotate(-270deg);
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(143, 142, 142);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ef4444;
+}
+
 .card-3d-wrap {
   position: relative;
-  width: 440px;
+  width: 500px;
   max-width: 100%;
-  height: 700px;
+  height: 800px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
-  margin-top: 25px;
+  margin-top: 60px;
+}
+
+.card-3d-wrap-info {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 380px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
 }
 
 .card-3d-wrapper {
@@ -154,6 +186,14 @@ h6 span {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   transition: all 600ms ease-out;
+}
+
+.table {
+  background-color: #2a2b38;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg");
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  color: white;
 }
 
 .card-front,
@@ -181,7 +221,7 @@ h6 span {
   transform: rotateY(180deg);
 }
 
-.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
+.checkbox:checked ~ .card-3d-wrap .card-3d-wrap-info .card-3d-wrapper {
   transform: rotateY(180deg);
 }
 
@@ -298,8 +338,8 @@ h6 span {
   /* padding: 0;
   margin: 0; */
   position: absolute;
-  bottom: 80px;
-  right: 50px;
+  bottom: 70px;
+  right: 20px;
 }
 
 .btn-custom {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../App.css";
 import Webcam from "react-webcam";
-// import impimage from "../img/main_wall_3.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -39,7 +38,9 @@ function Auth() {
   const webcamRef = React.useRef(null);
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
   const [alert, setAlert] = useState(false);
+  const [emailVerfiy, setEmailVerify] = useState(false);
   const [alertMessage, setAlertMessage] = useState({
     message: "test",
     status: "success",
@@ -49,7 +50,19 @@ function Auth() {
   const [regEmail, setRegEmail] = useState("");
   const [regPhone, setRegPhone] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  let org = "6267a04f0b2d2ea26c220a92";
   let history = useNavigate();
+
+  const VerifyEmail = async () => {
+    const data = await axios.post("http://localhost:5000/login-req", {
+      email: email,
+      organization: org,
+    });
+    console.log(data.data);
+    if (typeof data.data === "number") {
+      setEmailVerify(true);
+    }
+  };
 
   const dummyDate = async () => {
     var ImageURL = image; // 'photo' is your base64 image
@@ -66,6 +79,8 @@ function Auth() {
     const formData = new FormData();
     formData.append("file", blob);
     formData.append("email", email);
+    formData.append("organization", org);
+    formData.append("token", token);
 
     const data = await axios.post("http://localhost:5000/login", formData);
     console.log(data);
@@ -74,9 +89,9 @@ function Auth() {
     // console.log(data.data._id['$oid'])
     // console.log(Object.keys(data.data).length)
     if (Object.keys(data.data).length > 1) {
-      sessionStorage.setItem("user_id", data.data._id["$oid"]);
-      window.location.reload();
-      history("/user");
+      sessionStorage.setItem("user_id", data.data.company_id);
+      // window.location.reload();
+      // history("/user");
     } else {
       setAlertMessage({ message: data.data.data, status: "warning" });
       setAlert(true);
@@ -182,12 +197,7 @@ function Auth() {
                             </div>
                           )}
 
-                          <div
-                            className="section text-center"
-                            style={{
-                              padding: 20,
-                            }}
-                          >
+                          <div className="section text-center">
                             <h4
                               className="mb-4 pb-1"
                               style={{ color: "white" }}
@@ -196,48 +206,60 @@ function Auth() {
                             </h4>
 
                             <div className="form-group">
-                              {image === "" ? (
-                                <Webcam
-                                  audio={false}
-                                  height={300}
-                                  ref={webcamRef}
-                                  screenshotFormat="image/jpeg"
-                                  width={300}
-                                  videoConstraints={videoConstraints}
-                                />
+                              {emailVerfiy ? (
+                                <div>
+                                  {image === "" ? (
+                                    <Webcam
+                                      audio={false}
+                                      height={300}
+                                      ref={webcamRef}
+                                      screenshotFormat="image/jpeg"
+                                      width={400}
+                                      videoConstraints={videoConstraints}
+                                    />
+                                  ) : (
+                                    <img
+                                      src={image}
+                                      alt="sadsad"
+                                      id="limage"
+                                      style={{
+                                        marginBottom: "70px",
+                                        marginTop: "65px",
+                                      }}
+                                    />
+                                  )}
+                                </div>
                               ) : (
-                                <img
-                                  src={image}
-                                  alt="sadsad"
-                                  id="limage"
-                                  style={{
-                                    marginBottom: "25px",
-                                    marginTop: "25px",
-                                  }}
-                                />
+                                ""
                               )}
-                              {image !== "" ? (
-                                <button
-                                  type="button"
-                                  className="btn btn-outline-primary custom-button btn-sm"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setImage("");
-                                  }}
-                                >
-                                  <i className="fa-solid fa-camera-rotate"></i>
-                                </button>
+                              {emailVerfiy ? (
+                                <div>
+                                  {image !== "" ? (
+                                    <button
+                                      type="button"
+                                      className="btn btn-outline-primary custom-button btn-sm"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        setImage("");
+                                      }}
+                                    >
+                                      <i className="fa-solid fa-camera-rotate"></i>
+                                    </button>
+                                  ) : (
+                                    <button
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        capture();
+                                      }}
+                                      type="button"
+                                      className="btn btn-outline-primary custom-button btn-sm"
+                                    >
+                                      <i className="fa-solid fa-camera"></i>
+                                    </button>
+                                  )}
+                                </div>
                               ) : (
-                                <button
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    capture();
-                                  }}
-                                  type="button"
-                                  className="btn btn-outline-primary custom-button btn-sm"
-                                >
-                                  <i className="fa-solid fa-camera"></i>
-                                </button>
+                                ""
                               )}
                             </div>
                             <div className="form-group">
@@ -253,13 +275,38 @@ function Auth() {
                               />
                               <i className="input-icon uil uil-at"></i>
                             </div>
-                            {image !== "" && email && (
+
+                            {emailVerfiy ? (
+                              ""
+                            ) : (
                               <button
                                 className="btn-custom mt-4"
-                                onClick={() => dummyDate()}
+                                onClick={() => VerifyEmail()}
                               >
-                                submit
+                                Verify
                               </button>
+                            )}
+
+                            {emailVerfiy && email && (
+                              <>
+                                <div className="form-group mt-3">
+                                  <input
+                                    type="number"
+                                    name="logtoken"
+                                    value={token}
+                                    onChange={(e) => setToken(e.target.value)}
+                                    className="form-style"
+                                    placeholder="Your Token"
+                                  />
+                                  <i className="input-icon uil uil-at"></i>
+                                </div>
+                                <button
+                                  className="btn-custom mt-4"
+                                  onClick={() => dummyDate()}
+                                >
+                                  submit
+                                </button>
+                              </>
                             )}
                           </div>
                         </div>
@@ -285,7 +332,7 @@ function Auth() {
                                   height={300}
                                   ref={webcamRef}
                                   screenshotFormat="image/jpeg"
-                                  width={300}
+                                  width={400}
                                   videoConstraints={videoConstraints}
                                 />
                               ) : (
@@ -294,8 +341,8 @@ function Auth() {
                                   alt="sadsad"
                                   id="limage"
                                   style={{
-                                    marginBottom: "25px",
-                                    marginTop: "25px",
+                                    marginBottom: "50px",
+                                    marginTop: "55px",
                                   }}
                                 />
                               )}
@@ -375,19 +422,15 @@ function Auth() {
                               />
                               <i className="input-icon uil uil-lock-alt"></i>
                             </div>
-                            {image !== "" &&
-                              regEmail &&
-                              regPassword &&
-                              regName &&
-                              regPhone && (
-                                <button
-                                  type="button"
-                                  onClick={() => registerUser()}
-                                  className="btn-custom mt-4"
-                                >
-                                  submit
-                                </button>
-                              )}
+                            {regEmail && regPassword && regName && regPhone && (
+                              <button
+                                type="button"
+                                onClick={() => registerUser()}
+                                className="btn-custom mt-4"
+                              >
+                                submit
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>

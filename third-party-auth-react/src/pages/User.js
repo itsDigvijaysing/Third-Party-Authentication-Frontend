@@ -116,7 +116,7 @@ function User() {
                 <div className="card-front" style={{ padding: 25 }}>
                   <div className="section text-center">
                     <h4 className="mb-3 pb-1" style={{ color: "white" }}>
-                      Update Personal Details
+                      Personal Details
                     </h4>
                   </div>
                   {alert && (

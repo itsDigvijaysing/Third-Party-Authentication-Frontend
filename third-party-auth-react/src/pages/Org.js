@@ -1,39 +1,67 @@
 import React, { useState } from "react";
 import "../App.css";
+import Joi from "joi";
 import axios from "axios";
 
 function Org() {
-  const [regName, setRegName] = useState("");
-  const [regEmail, setRegEmail] = useState("");
-  const [regWeb, setRegWeb] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState({
     message: "test",
     status: "success",
   });
 
-  const registerUser = async () => {
-    const formData = new FormData();
+  const registerCompany = async () => {
+    const registerSchema = Joi.object({
+      name: Joi.string().alphanum().max(30).min(3).required(),
+      email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .required(),
+      phone: Joi.string()
+        .length(10)
+        .pattern(/^[0-9]+$/)
+        .required(),
+    });
 
-    formData.append("name", regName);
-    formData.append("email", regEmail);
-    formData.append("web", regWeb);
+    const { error } = await registerSchema.validate({ name, email, phone });
 
-    const data = await axios.post("http://127.0.0.1:5000/company", formData);
-    console.log(data);
-    setRegEmail("");
-    setRegName("");
-    setRegWeb("");
-    setAlertMessage({ message: data.data._id.$oid, status: "success" });
-    setAlert(true);
-  };
-
-  React.useEffect(() => {
-    if (sessionStorage.getItem("user_id")) {
-      // let org = sessionStorage.getItem("user_id");
-      // console.log(org);
+    if (error) {
+      console.log(error + " dasd");
+      setAlertMessage({ message: `${error}`, status: "warning" });
+      setAlert(true);
+      return;
     }
-  });
+    setAlert(false);
+
+    const data = await axios.post("http://localhost:5000/company", {
+      name,
+      email,
+      phone,
+    });
+
+    console.log(data);
+
+    if (data.data.company_id) {
+      setAlertMessage({
+        message: `Your api creditional ${data.data.company_id}`,
+        status: "success",
+      });
+      setAlert(true);
+    } else {
+      setAlertMessage({
+        message: `error :- ${data.data.data}`,
+        status: "danger",
+      });
+      setAlert(true);
+    }
+
+    setEmail("");
+    setPhone("");
+    setName("");
+  };
 
   return (
     <div style={{ backgroundColor: "#d0d0d0", padding: 25 }}>
@@ -41,32 +69,31 @@ function Org() {
         <div className="card-3d-wrap mx-auto" style={{ height: "60vh" }}>
           <div className="card-3d-wrapper">
             <div className="card-front" style={{ padding: 25 }}>
-              {alert && (
-                <div
-                  className={`alert alert-${alertMessage.status} alert-dismissible fade show`}
-                  role="alert"
-                >
-                  Org ID : {alertMessage.message}
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              )}
               <div className="section text-center">
                 <h4 className="mb-4 pb-1" style={{ color: "white" }}>
                   Org Sign Up
                 </h4>
               </div>
+              {alert && (
+                <div
+                  className={`alert alert-${alertMessage.status} alert-dismissible fade show`}
+                  role="alert"
+                >
+                  {alertMessage.message}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setAlert(false)}
+                  ></button>
+                </div>
+              )}
               <div className="form-group mt-2">
                 <input
                   type="text"
                   name="logname"
                   className="form-style"
-                  value={regName}
-                  onChange={(e) => setRegName(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   placeholder="Org Name"
                   id="logname"
                   autocomplete="off"
@@ -76,12 +103,12 @@ function Org() {
 
               <div className="form-group mt-2">
                 <input
-                  type="website"
-                  name="logweb"
+                  type="number"
+                  name="phone"
                   className="form-style"
-                  value={regWeb}
-                  onChange={(e) => setRegWeb(e.target.value)}
-                  placeholder="Website Address"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone"
                   id="logweb"
                   autocomplete="off"
                 />
@@ -92,8 +119,8 @@ function Org() {
                   type="email"
                   name="logemail"
                   className="form-style"
-                  value={regEmail}
-                  onChange={(e) => setRegEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your Email ID"
                   id="logemail"
                   autocomplete="off"
@@ -102,7 +129,7 @@ function Org() {
               </div>
               <button
                 type="button"
-                onClick={() => registerUser()}
+                onClick={() => registerCompany()}
                 className="btn-custom mt-4"
               >
                 submit

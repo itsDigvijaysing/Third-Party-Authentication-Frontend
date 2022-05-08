@@ -288,16 +288,16 @@ function Auth() {
                               {image === "" ? (
                                 <Webcam
                                   audio={false}
-                                  height={300}
+                                  height={"100%"}
+                                  width={"100%"}
                                   ref={webcamRef}
                                   screenshotFormat="image/jpeg"
-                                  width={400}
                                   videoConstraints={videoConstraints}
                                 />
                               ) : (
                                 <img
                                   src={image}
-                                  alt="sadsad"
+                                  alt="MainImage"
                                   id="limage"
                                   style={{
                                     marginBottom: "50px",

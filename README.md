@@ -6,6 +6,6 @@ In addition to face recognition, we understand the importance of adding extra la
 
 With our system, users can enjoy the convenience of quick and secure access to their accounts, all while ensuring their information remains safe and protected. Experience the future of authentication with our secured third-party authentication system.
 
-# Tech
+## Tech
 
 HTML, CSS, Bootstrap

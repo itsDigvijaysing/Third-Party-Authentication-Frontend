@@ -1,225 +1,220 @@
-# Getting Started with Third Parth Auth System
-
-# Api Documentation
-
-## 1. React
-
-### a. Call the api with Fetch
+# Third-Party Authentication System
 
-You can place all the API calls under services so that these can be reused across components wherever they are needed. You can use Fetch API directly you don’t have to download or install any dependency for it.
-Here is the user service using Fetch API. Since these are all the asynchronous calls you should use async/await so that it waits until the promise is resolved
+A multi-module project providing:
 
-    export async function getAllUsers() {
+1. **Central Auth Service**: Flask backend + React dashboard for user & organization management.  
+2. **Third-Party Face-Auth API**: Two-step token + face-recognition login for external apps.  
+3. **Organization Samples**: “face-auth-organizations” contains example Angular (TikTok) and React (Zomato) clients.  
+4. **Legacy Static**: A static HTML/JS version of the auth flows.
 
-        try{
-            const response = await fetch('/api/users');
-            return await response.json();
-        }catch(error) {
-            return [];
-        }
-
-    }
-
-    export async function createUser(data) {
-        const response = await fetch(`/api/user`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({user: data})
-          })
-        return await response.json();
-    }
-
-### b. Call the api with axios
-
-You can place all the API calls under services so that these can be reused across components wherever they are needed. You need to install dependency first before you use it in the application. Let’s install Axios API with the following command.
-npm install axios
-Once it is installed and you need to import it in the services as below.
-const axios = require('axios');
-
-const axios = require('axios');
-export async function getAllUsers() {
-try{
-const response = await axios.get('/api/users');
-console.log('response ', response)
-return response.data;
-}catch(error) {
-return [];
-}
-  
- }
-export async function createUser(data) {
-const response = await axios.post(`/api/user`, {user: data});
-return response.data;
-}
-
-## 2. Nodejs
-
-HTTP – the Standard Library
-First on our hit parade is the default HTTP module in the standard library. With this module, you can just plug and go without having to install external dependencies. The downside is that it isn’t very user friendly compared to other solutions.
-The following code will send a GET request to NASA’s API and print out the URL for the astronomy picture of the day as well as an explanation:
-
-    const https = require('https');
-
-    https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (resp) => {
-    let data = '';
+---
+
+## Table of Contents
 
-    // A chunk of data has been received.
-    resp.on('data', (chunk) => {
-    data += chunk;
-    });
-
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-    console.log(JSON.parse(data).explanation);
-    });
+1. [Core Features](#core-features)  
+2. [Technology Stack](#technology-stack)  
+3. [Folder Structure](#folder-structure)  
+4. [Prerequisites](#prerequisites)  
+5. [Setup & Installation](#setup--installation)  
+6. [Running the Application](#running-the-application)  
+7. [API Endpoints](#api-endpoints)  
+8. [Example Organization Clients](#example-organization-clients)  
+9. [Current Status & Known Issues](#current-status--known-issues)  
+10. [Future Improvements](#future-improvements)  
 
-    }).on("error", (err) => {
-    console.log("Error: " + err.message);
-    });
+---
 
-Much of the HTTP, and the HTTPS, module’s functionality is fairly low-level. You’re required to receive response data in chunks rather than just providing a callback function to be executed as soon as all of the data is received. You also need to parse the response data manually. This is fairly trivial if it is JSON formatted, but it is still an extra step.
-One other problem is that this module does not support HTTPS by default, so we need to require the https module instead if the API we are using communicates over HTTPS.
-It may take a bit more effort to get the data you want, but is a great utility if you don’t want to add too many dependencies to your codebase or want access to its low level functionality.
-Request is a simplified HTTP client comparable to Python’s requests library. This library is much more user friendly than the default http module and has been considered a go-to for the community for several years.
-This has been my personal choice since I’ve started using Node.js, and is great for quickly getting things done. Unlike the http module, you will have to install this one as a dependency from npm.
-Run the following in your terminal from the directory you want your code to live in:
+## Core Features
 
-    npm install request@2.81.0
+### 1. User Management (Flask + React Dashboard)
+- **Registration**: email, password, phone + face image (face detection via `face_recognition`).  
+- **Login**: standard email/password for dashboard access.  
+- **Profile**: view/update user data and image.  
+- **History**: view personal login history.
 
-You’ll see that you need much less code to accomplish the same task that we did above:
+### 2. Organization Management
+- Organizations register to obtain a `company_id` API credential.  
+- Full CRUD on organization records via React UI.
 
-    const request = require('request');
+### 3. Third-Party Face-Auth API (Flask)
+1. **Token Request** — `POST /login-req`  
+   - Input: `email`, `company_id` → issues a 4-digit token, logs it.  
+2. **Face Verification** — `POST /login`  
+   - Input: `email`, `token`, live face image → compares to stored image → returns user record on success.
 
-    request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    console.log(body.url);
-    console.log(body.explanation);
-    });
+### 4. Legacy Static Frontend
+- Static HTML/JS version of registration, login, and face-auth flows (for reference / deprecation).
 
-Request is a fantastic option if you just want an easy to use library that deals with HTTP requests in a sane way. If you want to use Promises, you can check out the request-promise library.
-Axios
-Axios is a Promise based HTTP client for the browser as well as node.js. Using Promises is a great advantage when dealing with code that requires a more complicated chain of events. Writing asynchronous code can get confusing, and Promises are one of several solutions to this problem. They are even useful in other languages such as Swift.
-To install Axios from npm, enter the following command in your terminal:
+---
 
-    npm install axios@0.21.1
+## Technology Stack
 
-The following code will accomplish the same task of logging the URL to and of explaining the astronomy picture of the day:
+- **Backend**: Flask, Flask-PyMongo, `face_recognition`, Flask-CORS, Flask-Limiter, Flask-Mail, Python 3.7+  
+- **Dashboard Frontend**: React.js, react-router-dom, axios, react-webcam, joi, Bootstrap  
+- **Sample Clients** (face-auth-organizations): Angular (TikTok), React (Zomato)  
+- **Static Legacy**: Vanilla HTML, CSS, JS  
+- **Database**: MongoDB (local or Atlas)
 
-    const axios = require('axios');
+---
 
-    axios.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
-    .then(response => {
-    console.log(response.data.url);
-    console.log(response.data.explanation);
-    })
-    .catch(error => {
-    console.log(error);
-    });
+## Folder Structure
 
-Axios even parses JSON responses by default. Pretty convenient! You can also see that error handling is done with .catch() since we are using promises now.
-You can even make multiple concurrent requests with axios.all if you wanted to do something like get the astronomy picture of two different days at once:
+```
+Third-Party Authentication System Project/
+├── face-auth-organizations/
+│   ├── tiktok/              # Angular sample client
+│   └── zomato/              # React sample client
+├── Third-Party-Auth-Backend/ # Flask backend
+│   ├── main.py
+│   ├── requirements.txt
+│   └── static/
+│       ├── uploads/         # Registered face images
+│       └── temp\_uploads/    # Live verification images
+└── Third-Party-Authentication-Frontend/
+├── Layout/              # draw\.io diagrams
+├── third-party-auth-react/  # React dashboard
+└── Third-Party-Auth-Website/ # Static legacy frontend
 
-    var axios = require('axios');
+```
 
-    axios.all([
-    axios.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2017-08-03'),
-    axios.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2017-08-02')
-    ]).then(axios.spread((response1, response2) => {
-    console.log(response1.data.url);
-    console.log(response2.data.url);
-    })).catch(error => {
-    console.log(error);
-    });
+---
 
-Asynchronous code can easily become over complicated and unpleasant to deal with, and the way Axios tackles this problem may make your life easier in the long run.
-SuperAgent
-Similarly to Axios, SuperAgent is another popular library primarily used for making AJAX requests in the browser but works in Node.js as well. Install SuperAgent with the following command:
+## Prerequisites
 
-    npm install superagent@6.1.0
+- **Python 3.7+**, `pip`  
+- **Node.js** & **npm** (or yarn)  
+- **MongoDB** running locally or via Atlas  
+- System libraries for `face_recognition` (e.g. `dlib`, `cmake`)
 
-What is cool about SuperAgent is that you have other useful functions that you can chain onto requests such as query() to add parameters to the request. We’ve been just manually adding them in the URL in the previous examples, but notice how SuperAgent gives you a function to do this:
+---
 
-    const superagent = require('superagent');
+## Setup & Installation
 
-    superagent.get('https://api.nasa.gov/planetary/apod')
-    .query({ api_key: 'DEMO_KEY', date: '2017-08-02' })
-    .end((err, res) => {
-    if (err) { return console.log(err); }
-    console.log(res.body.url);
-    console.log(res.body.explanation);
-    });
+### 1. Backend (Flask)
 
-Just like with Axios you don’t have to parse the JSON response yourself, which is pretty cool.
-Got
-Got is another choice if you want a more lightweight library. It is also available to use in Twilio Functions.
-Again, install Got with npm:
+```bash
+cd Third-Party-Auth-Backend
+python -m venv venv
+source venv/bin/activate       # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+````
 
-    npm install got@7.1.0
+* Edit `main.py` or `.env` to set:
 
-Similarly to Axios, Got works with Promises as well. The following code will work as the rest of the examples do:
+  ```ini
+  MONGO_URI=...
+  SECRET_KEY=...
+  MAIL_USERNAME=...
+  MAIL_PASSWORD=...
+  ```
+* Ensure `static/uploads` and `static/temp_uploads` exist (permissions writable).
 
-    const got = require('got');
+### 2. Dashboard Frontend (React)
 
-    got('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }).then(response => {
-    console.log(response.body.url);
-    console.log(response.body.explanation);
-    }).catch(error => {
-    console.log(error.response.body);
-    });
+```bash
+cd ../Third-Party-Authentication-Frontend/third-party-auth-react
+npm install
+```
 
-## Available Scripts
+* Update any API base-URL in `src/` (e.g. to `http://localhost:5000`).
 
-In the project directory, you can run:
+### 3. Sample Organization Clients
 
-### `npm start`
+#### TikTok (Angular)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+cd ../../face-auth-organizations/tiktok
+npm install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Zomato (React)
 
-### `npm test`
+```bash
+cd ../zomato
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Running the Application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Start Flask Backend**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   cd Third-Party-Auth-Backend
+   source venv/bin/activate
+   python main.py
+   # or flask run
+   ```
+2. **Start React Dashboard**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   cd ../Third-Party-Authentication-Frontend/third-party-auth-react
+   npm start
+   ```
+3. **Start Sample Clients**
 
-## Learn More
+   ```bash
+   # TikTok
+   cd ../../../face-auth-organizations/tiktok
+   ng serve
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   # Zomato
+   cd ../zomato
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* **Users**
+  `POST /user`, `GET /user`, `GET/PUT/DELETE /user/<id>`
 
-### Analyzing the Bundle Size
+* **Auth**
+  `POST /login-user` (dashboard)
+  `POST /login-req` → issue token
+  `POST /login` → verify face + token
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+* **Organizations**
+  `POST /company`, `GET /company`, `GET/PUT/DELETE /company/<id>`
 
-### Making a Progressive Web App
+* **History**
+  `GET/DELETE /history/<user_id>`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* **Utility**
+  `POST /file` → face detection on upload
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Example Organization Clients
 
-### Deployment
+* **TikTok** (`face-auth-organizations/tiktok`): Angular + login service tests.
+* **Zomato** (`face-auth-organizations/zomato`): React + sample branding.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Each client demonstrates how a third-party app would call `/login-req` and `/login`.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Current Status & Known Issues
+
+* **Plain-text passwords** (must implement hashing).
+* **Missing token validation** in `/login`.
+* **Hard-coded file paths** in backend.
+* **Flask-Mail configured but unused**.
+* **Basic error handling**; needs better logging.
+* **Static legacy frontend** is deprecated.
+
+---
+
+## Future Improvements
+
+* Add **bcrypt**/`passlib` hashing for passwords.
+* Enforce **token validation** in face verification.
+* Refactor file paths to be **configurable**.
+* Integrate **email delivery** for tokens.
+* Enhance **error handling** & add **logging** (e.g. Sentry).
+* Write **unit & integration tests**.
+* Publish **API docs** (Swagger/OpenAPI).
+* Improve **React dashboard UI/UX**.
+* Demonstrate **real third-party integration** with sample clients.

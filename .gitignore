@@ -1,2 +1,7 @@
 .vscode
 /test
+.env
+.env.*
+!.env.example
+third-party-auth-react/node_modules/
+third-party-auth-react/build/

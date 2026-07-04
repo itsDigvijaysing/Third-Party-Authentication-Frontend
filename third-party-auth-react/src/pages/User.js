@@ -55,10 +55,7 @@ function User() {
 
     // using axios
 
-    let user = await axios.put(
-      "http://127.0.0.1:5000/user/" + userId,
-      userDate
-    );
+    let user = await axios.put(`${API_BASE_URL}/user/${userId}`, userDate);
     if (user) {
       setAlertMessage({
         message: "User Updated",

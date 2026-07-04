@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import Joi from "joi";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 function Org() {
   const [name, setName] = useState("");
@@ -36,7 +37,7 @@ function Org() {
     }
     setAlert(false);
 
-    const data = await axios.post("http://localhost:5000/company", {
+    const data = await axios.post(`${API_BASE_URL}/company`, {
       name,
       email,
       phone,

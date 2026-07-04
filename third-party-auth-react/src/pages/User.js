@@ -42,7 +42,7 @@ function User() {
     setRegName(userDate.data.name);
     setRegEmail(userDate.data.email);
     setRegPhone(userDate.data.phone);
-    setRegPassword(userDate.data.password);
+    setRegPassword("");
   };
 
   const updateUser = async () => {

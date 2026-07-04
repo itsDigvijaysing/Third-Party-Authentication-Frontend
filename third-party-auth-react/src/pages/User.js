@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 function User() {
   const [regName, setRegName] = useState("");
@@ -28,15 +29,14 @@ function User() {
   }, []);
 
   const fetchHistory = async (id) => {
-    let history = await axios.get("http://localhost:5000/history/" + id);
+    let history = await axios.get(`${API_BASE_URL}/history/` + id);
 
     console.log(history.data);
-    setUserHistory(history.data);
-    userHistory.reverse();
+    setUserHistory([...history.data].reverse());
   };
 
   const getUser = async (user) => {
-    let userDate = await axios.get("http://localhost:5000/user/" + user);
+    let userDate = await axios.get(`${API_BASE_URL}/user/` + user);
     console.log(userDate, "geetting info ");
 
     setRegName(userDate.data.name);
@@ -78,15 +78,15 @@ function User() {
 
   return (
     <>
-      <div class="container" style={{ minHeight: "84.8vh" }}>
-        <div class="row">
-          <div class="col-sm-12 col-md-8">
+      <div className="container" style={{ minHeight: "84.8vh" }}>
+        <div className="row">
+          <div className="col-sm-12 col-md-8">
             <h1 className="py-3 text-dark font-monospace">Login History</h1>
             <div
               className="shadow-lg"
               style={{ maxHeight: "60vh", overflowY: "scroll" }}
             >
-              <table class="table">
+              <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">Sr.</th>
@@ -109,7 +109,7 @@ function User() {
             </div>
           </div>
 
-          <div class="col-sm-12 col-md-4">
+          <div className="col-sm-12 col-md-4">
             <h1 className="py-3 text-dark font-monospace">Update Info</h1>
             <div className="card-3d-wrap-info">
               <div className="card-3d-wrapper">

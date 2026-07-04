@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import Webcam from "react-webcam";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 
@@ -73,7 +74,7 @@ function Auth() {
     setAlert(false);
 
     // // sending request
-    const data = await axios.post("http://localhost:5000/login-user", {
+    const data = await axios.post(`${API_BASE_URL}/login-user`, {
       email,
       password,
     });
@@ -135,7 +136,7 @@ function Auth() {
     formData.append("file", blob);
 
     // sending request
-    const data = await axios.post("http://localhost:5000/user", formData);
+    const data = await axios.post(`${API_BASE_URL}/user`, formData);
     console.log(data);
     setImage("");
     setRegEmail("");
@@ -156,7 +157,7 @@ function Auth() {
     if (sessionStorage.getItem("user_id")) {
       history("/user");
     }
-  });
+  }, [history]);
 
   return (
     <div style={{ backgroundColor: "#d0d0d0" }}>
